@@ -3,7 +3,12 @@ seq_U5 = seq_read_fasta("../sequences/U5")
 seq_ADA = seq_read_fasta("../sequences/ADA")
 seq_FRAT1 = seq_read_fasta("../sequences/FRAT1")
 seq_FXN = seq_read_fasta("../sequences/FXN")
-bases = ["A", "C", "T", "G"]
-for b in bases:
-    print("Gene U5:", str(b) + ":",seq_count_base(seq_U5, b), "\nGene ADA:", str(b) + ":", seq_count_base(seq_ADA, b), "\nGene FRAT1:", str(b) + ":", seq_count_base(seq_FRAT1, b), "\nGene FXN:", str(b) + ":", seq_count_base(seq_FXN, b))
 
+names = ["U5", "ADA", "FRAT1", "FXN"]
+genes = [seq_U5, seq_ADA, seq_FRAT1, seq_FXN]
+bases = ["A", "C", "T", "G"]
+for n in names:
+    print("Gene", str(n) + ":")
+    for g in genes:
+        for b in bases:
+            print(str(b) + ":", seq_count_base(g, b))
