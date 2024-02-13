@@ -23,7 +23,7 @@ def seq_count(seq):
 def seq_reverse(seq, n):
     sequence = seq[:n]
     reverse = sequence[::-1]
-    return sequence, reverse
+    return reverse
 def seq_complement(seq):
     complement = ""
     for i in seq:

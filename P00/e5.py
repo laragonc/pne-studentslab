@@ -1,4 +1,4 @@
-from Seq0 import *
+from S06.Seq0 import *
 seq_U5 = seq_read_fasta("../sequences/U5")
 seq_ADA = seq_read_fasta("../sequences/ADA")
 seq_FRAT1 = seq_read_fasta("../sequences/FRAT1")

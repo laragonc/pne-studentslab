@@ -1,2 +1,2 @@
-from Seq0 import *
+from S06.Seq0 import *
 seq_ping()
