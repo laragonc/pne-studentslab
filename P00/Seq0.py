@@ -37,7 +37,6 @@ def seq_complement(seq):
             complement += "C"
     return complement
 def seq_frequent(seq):
-    frequent = ""
     a = seq.count("A")
     c = seq.count("C")
     t = seq.count("T")
