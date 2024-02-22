@@ -36,6 +36,24 @@ def seq_complement(seq):
         elif i == "G":
             complement += "C"
     return complement
+def seq_frequent(seq):
+    frequent = ""
+    a = seq.count("A")
+    c = seq.count("C")
+    t = seq.count("T")
+    g = seq.count("G")
+    maximum = max(a, c, t, g)
+    if maximum == a:
+        frequent = "A"
+    elif maximum == c:
+        frequent = "C"
+    elif maximum == g:
+        frequent = "G"
+    elif maximum == t:
+        frequent = "T"
+    return frequent
+
+
 
 
 
