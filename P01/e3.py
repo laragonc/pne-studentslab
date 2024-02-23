@@ -5,5 +5,5 @@ s1 = Seq()
 s2 = Seq("ACTGA")
 # -- Create an invalid sequence
 s3 = Seq("Invalid sequence")
-
+print("-----------Practice 1 - Exercise 3-----------")
 print("Sequence 1:", s1,"\nSequence 2:", s2,"\nSequence 3:", s3)

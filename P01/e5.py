@@ -3,6 +3,7 @@ s1 = Seq()
 s2 = Seq("ACTGA")
 s3 = Seq("Invalid sequence")
 bases = ["A", "C", "T", "G"]
+print("-----------Practice 1 - Exercise 5-----------")
 print("Sequence 1:", "(Length:", s1.len(), ")", s1)
 for b in bases:
     print(str(b) + ":", s1.seq_count_base(b), end=", ")
