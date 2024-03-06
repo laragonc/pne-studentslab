@@ -32,7 +32,7 @@ class SeqServer:
                 print("Message from client: {}".format(msg))
 
                 # Send the message
-                message = self.ping()
+                message = self.return_response(str(msg))
                 send_bytes = str.encode(message)
                 # We must write bytes, not a string
                 clientsocket.send(send_bytes)
@@ -44,6 +44,12 @@ class SeqServer:
         except KeyboardInterrupt:
             print("Server stopped by the user")
             serversocket.close()
+    def return_response(self, msg):
+        if msg.startswith("PING"):
+            print("PING")
+            return self.ping_response()
 
-
+    def ping_response(self):
+        print("Ping command")
+        return "ok"
 
