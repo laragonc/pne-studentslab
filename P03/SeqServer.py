@@ -1,7 +1,7 @@
 import socket
-class SeqServer:
-    def __innit__(self):
-        PORT = 8081
+class SeqServer():
+    def __init__(self):
+        PORT = 8080
         IP = "127.0.0.1"  # it depends on the machine the server is running
         MAX_OPEN_REQUESTS = 5
 
@@ -44,12 +44,25 @@ class SeqServer:
         except KeyboardInterrupt:
             print("Server stopped by the user")
             serversocket.close()
+
     def return_response(self, msg):
         if msg.startswith("PING"):
             print("PING")
             return self.ping_response()
-
+        if msg.startswith("GET"):
+            print("GET")
+            return self.get_response(msg)
     def ping_response(self):
-        print("Ping command")
-        return "ok"
+        print("PING command")
+        return "ok\n"
+    def get_response(self, msg):
+        number = 0
+        list_sequences = ["ACTGGACTGGTTCA", "CTGGAATCGTACG", "TACGTACTGAACGT", "GTAGCTACTGCTAGT", "ACTTGGAAGGTCAC"]
+        for i in msg:
+            if i.isdigit():
+                number = i
+            else:
+                pass
+        return list_sequences[int(number)]
 
+c = SeqServer()
