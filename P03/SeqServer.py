@@ -1,7 +1,8 @@
 import socket
+from Seq1 import *
 class SeqServer():
     def __init__(self):
-        PORT = 8080
+        PORT = 8081
         IP = "127.0.0.1"  # it depends on the machine the server is running
         MAX_OPEN_REQUESTS = 5
 
@@ -49,20 +50,46 @@ class SeqServer():
         if msg.startswith("PING"):
             print("PING")
             return self.ping_response()
-        if msg.startswith("GET"):
+        elif msg.startswith("GET"):
             print("GET")
-            return self.get_response(msg)
+            return self.get_response(msg) + "\n"
+        elif msg.startswith("INFO"):
+            print("INFO")
+            return self.info_response(msg) + "\n"
     def ping_response(self):
         print("PING command")
         return "ok\n"
     def get_response(self, msg):
-        number = 0
         list_sequences = ["ACTGGACTGGTTCA", "CTGGAATCGTACG", "TACGTACTGAACGT", "GTAGCTACTGCTAGT", "ACTTGGAAGGTCAC"]
+        number = 0
         for i in msg:
             if i.isdigit():
                 number = i
             else:
                 pass
+        print (list_sequences[int(number)])
         return list_sequences[int(number)]
-hg
+    def info_response(self, msg):
+        sequence = Seq((msg.split(" "))[1]) #lista y el indice 1 y además esta en Seq
+        response = str(sequence) + "\n" + str(sequence.len()) + "\n"
+        print(response)
+        return response
+
+
+        #print(sequence)
+        #print(sequence.len())
+        #total = sum((sequence.seq_count()).values())
+        #for key, number in (sequence.seq_count()).items():
+            #percentage = round(number / total, 2) * 100
+            #print(key, number, percentage, "%")
+
+
+
+
+
+
+
+
+
+
 c = SeqServer()
