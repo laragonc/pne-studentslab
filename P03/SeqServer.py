@@ -2,7 +2,7 @@ import socket
 from Seq1 import *
 class SeqServer():
     def __init__(self):
-        PORT = 8081
+        PORT = 8080
         IP = "127.0.0.1"  # it depends on the machine the server is running
         MAX_OPEN_REQUESTS = 5
 
@@ -56,6 +56,13 @@ class SeqServer():
         elif msg.startswith("INFO"):
             print("INFO")
             return self.info_response(msg) + "\n"
+        elif msg.startswith("COMP"):
+            print("COMP")
+            return self.comp_response(msg) + "\n"
+        elif msg.startswith("REV"):
+            print("REV")
+            return self.comp_response(msg) + "\n"
+
     def ping_response(self):
         print("PING command")
         return "ok\n"
@@ -70,23 +77,25 @@ class SeqServer():
         print (list_sequences[int(number)])
         return list_sequences[int(number)]
     def info_response(self, msg):
-        sequence = Seq((msg.split(" "))[1]) #lista y el indice 1 y además esta en Seq
-        response = str(sequence) + "\n" + str(sequence.len()) + "\n"
-        print(response)
-        return response
-
-
-        #print(sequence)
-        #print(sequence.len())
-        #total = sum((sequence.seq_count()).values())
-        #for key, number in (sequence.seq_count()).items():
-            #percentage = round(number / total, 2) * 100
-            #print(key, number, percentage, "%")
-
-
-
-
-
+        message = msg.replace("INFO", "").strip()
+        sequence = Seq(message)
+        response = "Sequence: " + str(sequence) + "\n" + "Total length: " +str(sequence.len()) + "\n"
+        total = sum((sequence.seq_count()).values())
+        for key, number in (sequence.seq_count()).items():
+            percentage = round(number / total, 2) * 100
+            count = str(key) + str(number) + " (" + str(percentage) + "%)"
+        print(response + "\n" + count)
+        return response + "\n" + count
+    def comp_response(self, msg):
+        message = msg.replace("COMP", "").strip()
+        sequence = Seq(message)
+        print(sequence.seq_complement())
+        return sequence.seq_complement()
+    def rev_response(self, msg):
+        message = msg.replace("REV", "").strip()
+        sequence = Seq(message)
+        print(sequence.seq_reverse(20))
+        return sequence.seq_reverse(20)
 
 
 
