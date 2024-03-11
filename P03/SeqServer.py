@@ -1,5 +1,6 @@
 import socket
 from Seq1 import *
+import termcolor
 class SeqServer():
     def __init__(self):
         PORT = 8080
@@ -45,24 +46,25 @@ class SeqServer():
         except KeyboardInterrupt:
             print("Server stopped by the user")
             serversocket.close()
-
     def return_response(self, msg):
         if msg.startswith("PING"):
-            print("PING")
+            print(termcolor.colored("PING", "green"))
             return self.ping_response()
         elif msg.startswith("GET"):
-            print("GET")
+            print(termcolor.colored("GET", "green"))
             return self.get_response(msg) + "\n"
         elif msg.startswith("INFO"):
-            print("INFO")
+            print(termcolor.colored("INFO", "green"))
             return self.info_response(msg) + "\n"
         elif msg.startswith("COMP"):
-            print("COMP")
+            print(termcolor.colored("COMP", "green"))
             return self.comp_response(msg) + "\n"
         elif msg.startswith("REV"):
-            print("REV")
-            return self.comp_response(msg) + "\n"
-
+            print(termcolor.colored("REV", "green"))
+            return self.rev_response(msg) + "\n"
+        elif msg.startswith("GENE"):
+            print(termcolor.colored("GENE", "green"))
+            return self.gene_response(msg) + "\n"
     def ping_response(self):
         print("PING command")
         return "ok\n"
@@ -81,11 +83,12 @@ class SeqServer():
         sequence = Seq(message)
         response = "Sequence: " + str(sequence) + "\n" + "Total length: " +str(sequence.len()) + "\n"
         total = sum((sequence.seq_count()).values())
+        count = ""
         for key, number in (sequence.seq_count()).items():
             percentage = round(number / total, 2) * 100
-            count = str(key) + str(number) + " (" + str(percentage) + "%)"
-        print(response + "\n" + count)
-        return response + "\n" + count
+            count += str(key)+": " + str(number) + " (" + str(percentage) + "%)\n"
+        print(response + count)
+        return response + count
     def comp_response(self, msg):
         message = msg.replace("COMP", "").strip()
         sequence = Seq(message)
@@ -94,11 +97,12 @@ class SeqServer():
     def rev_response(self, msg):
         message = msg.replace("REV", "").strip()
         sequence = Seq(message)
-        print(sequence.seq_reverse(20))
-        return sequence.seq_reverse(20)
-
-
-
-
-
+        print(sequence.seq_reverse())
+        return sequence.seq_reverse()
+    def gene_response(self, msg):
+        message = msg.replace("GENE", "").strip()
+        s = Seq()
+        sequence = s.read_fasta("../sequences/" + message)
+        print(sequence)
+        return sequence
 c = SeqServer()

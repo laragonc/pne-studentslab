@@ -47,14 +47,13 @@ class Seq:
                     dic[i] += 1
         return dic
 
-    def seq_reverse(self, n):
+    def seq_reverse(self):
         if self.strbases == "NULL":
             reverse = "NULL"
         elif self.strbases == "ERROR":
             reverse = "ERROR"
         else:
-            sequence = self.strbases[:n]
-            reverse = sequence[::-1]
+            reverse = self.strbases[::-1]
         return reverse
     def seq_complement(self):
         complement = ""
