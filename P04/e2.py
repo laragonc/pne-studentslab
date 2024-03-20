@@ -9,7 +9,7 @@ PORT = 8080
 
 def get_info_A(request):
     if ("GET /info/A") in request:
-        body = Path("./html/info/html/A.html").read_text()
+        body = Path("./html/info/A.html").read_text()
     else:
         body = ""
     return body
