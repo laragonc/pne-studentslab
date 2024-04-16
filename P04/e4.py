@@ -7,30 +7,18 @@ from pathlib import Path
 IP = "127.0.0.1"
 PORT = 8080
 
-def get_info_A(request):
-    if ("GET /info/A") in request:
-        body = Path("./html/info/A.html").read_text()
+def find_req_line(webline):
+    if ("GET /info/A") in webline:
+        file = Path("./html/info/A.html").read_text()
+    elif ("GET /info/C") in webline:
+        file = Path("./html/info/C.html").read_text()
+    elif ("GET /info/G") in webline:
+        file = Path("./html/info/G.html").read_text()
+    elif ("GET /info/T") in webline:
+        file = Path("./html/info/T.html").read_text()
     else:
-        body = ""
-    return body
-def get_info_C(request):
-    if ("GET /info/C") in request:
-        body = Path("./html/info/C.html").read_text()
-    else:
-        body = ""
-    return body
-def get_info_G(request):
-    if ("GET /info/G") in request:
-        body = Path("./html/info/G.html").read_text()
-    else:
-        body = ""
-    return body
-def get_info_T(request):
-    if ("GET /info/T") in request:
-        body = Path("./html/info/T.html").read_text()
-    else:
-        body = ""
-    return body
+        file = ""
+    return file
 
 
 
@@ -59,15 +47,10 @@ def process_client(s):
 
     # This new contents are written in HTML language
     file_contents = Path
+    body = find_req_line(req_line)
 
-    if req_line.__contains__("A"):
-        body = get_info_A(req_line)
-    elif req_line.__contains__("C"):
-        body = get_info_C(req_line)
-    elif req_line.__contains__("G"):
-        body = get_info_G(req_line)
-    elif req_line.__contains__("T"):
-        body = get_info_T(req_line)
+
+
 
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"

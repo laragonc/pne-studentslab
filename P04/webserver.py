@@ -12,8 +12,15 @@ def find_req_line(webline):
         file = Path("./html/info/A.html").read_text()
     elif ("GET /info/C") in webline:
         file = Path("./html/info/C.html").read_text()
+    elif ("GET /info/G") in webline:
+        file = Path("./html/info/G.html").read_text()
+    elif ("GET /info/T") in webline:
+        file = Path("./html/info/T.html").read_text()
+    elif ("GET /") in webline:
+        file = Path("./html/index.html").read_text()
+
     else:
-        file = ""
+        file = Path("./html/info/error.html").read_text()
     return file
 
 
