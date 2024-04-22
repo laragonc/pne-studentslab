@@ -1,8 +1,6 @@
 import http.server
 import socketserver
 import termcolor
-from pathlib import Path
-
 
 # Define the Server's port
 PORT = 8080
@@ -28,30 +26,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # that everything is ok
 
         # Message to send back to the client
-        if self.path == "/":
-            contents = Path("./html/index.html").read_text()
-            self.send_response(200)
-        elif self.path == "/info/A":
-            contents = Path("./html/info/A.html").read_text()
-            self.send_response(200)
-        elif self.path == "/info/C":
-            contents = Path("./html/info/C.html").read_text()
-            self.send_response(200)
-        elif self.path == "/info/G":
-            contents = Path("./html/info/G.html").read_text()
-            self.send_response(200)
-        elif self.path == "/info/T":
-            contents = Path("./html/info/T.html").read_text()
-            self.send_response(200)
-        else:
-            contents = Path("./html/error.html").read_text()
-            self.send_response(404)
+        contents = "I am the happy server! :-)"
 
         # Generating the response message
-      # -- Status line: OK!
+        self.send_response(200)  # -- Status line: OK!
 
         # Define the content-type header:
-        self.send_header('Content-Type', 'text/html') # cambiar plain por html
+        self.send_header('Content-Type', 'text/plain')
         self.send_header('Content-Length', len(contents.encode()))
 
         # The header is finished

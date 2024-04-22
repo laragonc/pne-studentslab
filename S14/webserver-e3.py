@@ -29,22 +29,19 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Message to send back to the client
         if self.path == "/":
-            contents = Path("./html/index.html").read_text()
+            contents = Path("./index.html").read_text()
             self.send_response(200)
-        elif self.path == "/info/A":
-            contents = Path("./html/info/A.html").read_text()
+        elif self.path == "/green.html":
+            contents = Path("/green.html").read_text()
             self.send_response(200)
-        elif self.path == "/info/C":
-            contents = Path("./html/info/C.html").read_text()
+        elif self.path == "/blue.html":
+            contents = Path("./blue.html").read_text()
             self.send_response(200)
-        elif self.path == "/info/G":
-            contents = Path("./html/info/G.html").read_text()
-            self.send_response(200)
-        elif self.path == "/info/T":
-            contents = Path("./html/info/T.html").read_text()
+        elif self.path == "/pink.html":
+            contents = Path("./pink.html").read_text()
             self.send_response(200)
         else:
-            contents = Path("./html/error.html").read_text()
+            contents = Path("./error.html").read_text()
             self.send_response(404)
 
         # Generating the response message
