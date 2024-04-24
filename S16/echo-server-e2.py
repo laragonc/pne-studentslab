@@ -31,17 +31,22 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Open the form1.html file
         # Read the index from the file
         if self.path == "/" or self.path.startswith("/echo"):
-            contents = Path("./html/form-e1.html").read_text()
+            contents = Path("./html/form-e2.html").read_text()
             self.send_response(200)
             url_path = urlparse(self.path)
             path = url_path.path # we get it from here
             arguments = parse_qs(url_path.query)
             message = arguments.get("msg", [""])[0]
+            capital = arguments.get("chk", [""])[0]
             if message:
-                contents = read_html_file("response1.html").render(context={"message": message})
-                self.send_response(200)
+                if capital:
+                    contents = read_html_file("response1.html").render(context={"message": message.upper()})
+                    self.send_response(200)
+                else:
+                    contents = read_html_file("response1.html").render(context={"message": message})
+                    self.send_response(200)
             else:
-                contents = Path("./html/form-e1.html").read_text()
+                contents = Path("./html/form-e2.html").read_text()
                 self.send_response(200)
         else:
             contents = Path("./html/error.html").read_text()
