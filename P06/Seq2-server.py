@@ -37,9 +37,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             contents = Path("./html/index.html").read_text()
             self.send_response(200)
 
-        elif path == "/ping":
+        elif path == "/ping"
             contents = Path("./html/ping.html").read_text()
             self.send_response(200)
+        elif path = "/get"
         else:
             contents = Path("./html/error.html").read_text()
             self.send_response(404)
@@ -56,3 +57,23 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(str.encode(contents))
 
         return
+
+    # ------------------------
+    # - Server MAIN program
+    # ------------------------
+    # -- Set the new handler
+Handler = TestHandler
+
+# -- Open the socket server
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+
+    print("Serving at PORT", PORT)
+
+    # -- Main loop: Attend the client. Whenever there is a new
+    # -- clint, the handler is called
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print("")
+        print("Stopped by the user")
+        httpd.server_close()
