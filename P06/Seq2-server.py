@@ -13,6 +13,38 @@ def read_html_file(filename):
     contents = Path("html/" + filename).read_text()
     contents = j.Template(contents)
     return contents
+def get_response(number):
+    list_sequences = ["ACTGGACTGGTTCA", "CTGGAATCGTACG", "TACGTACTGAACGT", "GTAGCTACTGCTAGT", "ACTTGGAAGGTCAC"]
+    return list_sequences[int(number)]
+def seq_read_fasta(filename):
+    first_line = Path(filename).read_text().find("\n")
+    seq = Path(filename).read_text()[first_line:]
+    seq = seq.replace("\n", "")
+    return seq
+def seq_reverse(seq):
+    reverse = seq[::-1]
+    return reverse
+def seq_complement(seq):
+    complement = ""
+    for i in seq:
+        if i == "A":
+            complement += "T"
+        elif i == "T":
+            complement += "A"
+        elif i == "C":
+            complement += "G"
+        elif i == "G":
+            complement += "C"
+    return complement
+def info_response(sequence):
+    response = "Sequence: " + str(sequence) + "\n" + "Total length: " +str(sequence.len()) + "\n"
+    total = sum((sequence.seq_count()).values())
+    count = ""
+    for key, number in (sequence.seq_count()).items():
+        percentage = round(number / total, 2) * 100
+        count += str(key)+": " + str(number) + " (" + str(percentage) + "%)\n"
+    print(response + count)
+    return response + count
 
 
 # -- This is for preventing the error: "Port already in use"
@@ -37,10 +69,31 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             contents = Path("./html/index.html").read_text()
             self.send_response(200)
 
-        elif path == "/ping"
+        elif path == "/ping":
             contents = Path("./html/ping.html").read_text()
             self.send_response(200)
-        elif path = "/get"
+        elif path == "/get":
+            number = arguments.get("n", [""])[0]
+            sequence = get_response(number)
+            contents = read_html_file("get.html").render(context={"number": number, "sequence": sequence})
+            self.send_response(200)
+        elif path == "/gene":
+            gene_name = arguments.get("name", [""])[0]
+            sequence = seq_read_fasta("../sequences/" + gene_name)
+            contents = read_html_file("gene.html").render(context={"gene_name": gene_name, "sequence": sequence})
+            self.send_response(200)
+        elif path == "/operation":
+            sequence = arguments.get("msg", [""])[0]
+            operation = arguments.get("op", [""])[0]
+            if operation == "info":
+                result = info_response(sequence)
+            elif operation == "rev":
+                result = seq_reverse(sequence)
+            elif operation == "comp":
+                result = seq_complement(sequence)
+            contents = read_html_file("operation.html").render(context={"sequence": sequence, "operation": operation, "result": result})
+            self.send_response(200)
+
         else:
             contents = Path("./html/error.html").read_text()
             self.send_response(404)

@@ -47,31 +47,31 @@ class Seq:
                     dic[i] += 1
         return dic
 
-    def seq_reverse(self):
-        if self.strbases == "NULL":
-            reverse = "NULL"
-        elif self.strbases == "ERROR":
-            reverse = "ERROR"
-        else:
-            reverse = self.strbases[::-1]
-        return reverse
-    def seq_complement(self):
-        complement = ""
-        if self.strbases == "NULL":
-            complement = "NULL"
-        elif self.strbases == "ERROR":
-            complement = "ERROR"
-        else:
-            for i in self.strbases:
-                if i == "A":
-                    complement += "T"
-                elif i == "T":
-                    complement += "A"
-                elif i == "C":
-                    complement += "G"
-                elif i == "G":
-                    complement += "C"
-        return complement
+def seq_reverse(self):
+    if self.strbases == "NULL":
+        reverse = "NULL"
+    elif self.strbases == "ERROR":
+        reverse = "ERROR"
+    else:
+        reverse = self.strbases[::-1]
+    return reverse
+def seq_complement(self):
+    complement = ""
+    if self.strbases == "NULL":
+        complement = "NULL"
+    elif self.strbases == "ERROR":
+        complement = "ERROR"
+    else:
+        for i in self.strbases:
+            if i == "A":
+                complement += "T"
+            elif i == "T":
+                complement += "A"
+            elif i == "C":
+                complement += "G"
+            elif i == "G":
+                complement += "C"
+    return complement
 
     def read_fasta(self, filename):
         first_line = Path(filename).read_text().find("\n")
