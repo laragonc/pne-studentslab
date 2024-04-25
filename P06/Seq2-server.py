@@ -36,17 +36,17 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Open the form1.html file
         # Read the index from the file
         if self.path == "/" or self.path.startswith("/echo"):
-            contents = Path("./html/form-e2.html").read_text()
+            contents = Path("./html/index.html").read_text()
             self.send_response(200)
             url_path = urlparse(self.path)
             path = url_path.path # we get it from here
             arguments = parse_qs(url_path.query)
             ping = arguments.get("ping", [""])[0]
             if ping:
-                contents = read_html_file("response1.html").render(context={"message": ping.upper()})
+                contents = Path("./html/ping.html").read_text()
                 self.send_response(200)
             else:
-                contents = Path("./html/form-e2.html").read_text()
+                contents = Path("./html/index.html").read_text()
                 self.send_response(200)
         else:
             contents = Path("./html/error.html").read_text()
