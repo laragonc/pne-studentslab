@@ -4,7 +4,7 @@ import termcolor
 from pathlib import Path
 import jinja2 as j
 from urllib.parse import parse_qs, urlparse
-
+from Seq1 import *
 # Define the Server's port
 PORT = 8080
 
@@ -36,13 +36,16 @@ def seq_complement(seq):
         elif i == "G":
             complement += "C"
     return complement
-def info_response(sequence):
-    response = "Sequence: " + str(sequence) + "\n" + "Total length: " +str(sequence.len()) + "\n"
+
+
+def info_response(self, seque):
+    sequence = Seq(seque)
+    response = "Sequence: " + str(sequence) + "\n" + "Total length: " + str(sequence.len()) + "\n"
     total = sum((sequence.seq_count()).values())
     count = ""
     for key, number in (sequence.seq_count()).items():
         percentage = round(number / total, 2) * 100
-        count += str(key)+": " + str(number) + " (" + str(percentage) + "%)\n"
+        count += str(key) + ": " + str(number) + " (" + str(percentage) + "%)\n"
     print(response + count)
     return response + count
 
@@ -86,7 +89,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             sequence = arguments.get("msg", [""])[0]
             operation = arguments.get("op", [""])[0]
             if operation == "info":
-                result = info_response(sequence)
+                result = self.info_response(sequence)
             elif operation == "rev":
                 result = seq_reverse(sequence)
             elif operation == "comp":
