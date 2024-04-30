@@ -1,0 +1,1 @@
+genes = {"FRAT1": "ENSG00000165879" , "ADA": , "FXN": , "RNU6_269P": , "MIR633": , "TTTY4C": , "RBMY2YP": , "FGFR3":, "KDR": , "ANK2": }
