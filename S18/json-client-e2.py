@@ -30,31 +30,22 @@ data1 = r1.read().decode("utf-8")
 
 # -- Create a variable with the data,
 # -- form the JSON received
-person = json.loads(data1)
+data = json.loads(data1)
 
 print("CONTENT: ")
 
 # Print the information in the object
 print()
-termcolor.cprint("Name: ", 'green', end="")
-print(person['Firstname'], person['Lastname'])
-
-termcolor.cprint("Age: ", 'green', end="")
-print(person['age'])
-
-# Get the phoneNumber list
-phoneNumbers = person['phoneNumber']
-
-# Print the number of elements int the list
-termcolor.cprint("Phone numbers: ", 'green', end='')
-print(len(phoneNumbers))
-
-# Print all the numbers
-for i, num in enumerate(phoneNumbers):
-    termcolor.cprint("  Phone {}:".format(i), 'blue')
-
-    # The element num contains 2 fields: number and type
-    termcolor.cprint("    Type: ", 'red', end='')
-    print(num['type'])
-    termcolor.cprint("    Number: ", 'red', end='')
-    print(num['number'])
+for person in data:
+    print()
+    termcolor.cprint("Name: ", 'green', end="")
+    print(person['Firstname'], person['Lastname'])
+    termcolor.cprint("Age: ", 'green', end="")
+    print(person['age'])
+    termcolor.cprint("Phone numbers: ", 'green', end='')
+    for i, number in enumerate(person['phoneNumber'], 1):
+        termcolor.cprint("\n  Phone " + str(i) + ": ", 'blue')
+        termcolor.cprint("\t- Type: ", 'red', end='')
+        print(number['type'])
+        termcolor.cprint("\t- Number: ", 'red', end='')
+        print(number['number'])
