@@ -38,16 +38,20 @@ def seq_complement(seq):
     return complement
 
 
-def info_response(self, seque):
-    sequence = Seq(seque)
-    response = "Sequence: " + str(sequence) + "\n" + "Total length: " + str(sequence.len()) + "\n"
-    total = sum((sequence.seq_count()).values())
-    count = ""
-    for key, number in (sequence.seq_count()).items():
-        percentage = round(number / total, 2) * 100
-        count += str(key) + ": " + str(number) + " (" + str(percentage) + "%)\n"
-    print(response + count)
-    return response + count
+def info_response(seq):
+    sequence = ""
+    for i in seq:
+        if i in "ACGT":
+            sequence += i
+    bases_list = ["A", "C", "T", "G"]
+    result = f"Total length: {len(seq)}\n"
+    for j in bases_list:
+        average = (round(seq.count(j) / len(seq) * 100, 2))
+        result += f"{j}: {seq.count(j)} ({average}%)\n"
+    return result
+
+
+
 
 
 # -- This is for preventing the error: "Port already in use"
@@ -89,7 +93,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             sequence = arguments.get("msg", [""])[0]
             operation = arguments.get("op", [""])[0]
             if operation == "info":
-                result = self.info_response(sequence)
+                result = info_response(sequence)
             elif operation == "rev":
                 result = seq_reverse(sequence)
             elif operation == "comp":
