@@ -14,61 +14,23 @@
   <form action="lim" method="get">
     <input type="submit" value="Send">
   </form>
-    <p>1)List of species in the genome database</p>
-    Limit:
-      <input type="text" name="lim">
+    <p>2)Information about the karyotype: </p>
+    Select the species:
+      <input type="text" name="spc">
     <br>
-  <form action="lim" method="get">
+  <form action="spc" method="get">
     <input type="submit" value="Send">
   </form>
-    <p>1)List of species in the genome database</p>
-    Limit:
-      <input type="text" name="lim">
+    <p>3)Chromosome Length </p>
+    Select the species:
+      <input type="text" name="spc">
     <br>
-  <form action="lim" method="get">
+    Select a chromosome:
+      <input type="text" name="chr">
+    <br>
+  <form action="len" method="get">
     <input type="submit" value="Send">
   </form>
-
-
-  <form action="get" method="get">
-    Get a Sequence. Select sequence number
-    <select name="n">
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-
-        <input type="submit" value="GET"/>
-    </form>
-  <hr>
-<form action="gene" method="get">
-    Get a Gene. Select the name
-    <select name="name">
-        <option value="U5">U5</option>
-        <option value="ADA">ADA</option>
-        <option value="FRAT1">FRAT1</option>
-        <option value="RNU6_269P">RNU6_269P</option>
-        <option value="FXN">FXN</option>
-      </select>
-
-        <input type="submit" value="GENE"/>
-    </form>
-    <hr>
-  <form action="operation" method="get">
-    Write a sequence:
-      <input type="text" name="msg">
-      <br>
-    Select operation:
-      <input type="radio" name="op" value="info"> Info
-      <input type="radio" name="op" value="comp"> Comp
-      <input type="radio" name="op" value="rev"> Rev
-      <br>
-    Perform operation:
-      <input type="submit" value="OPERATE!">
-    </form>
-  <hr>
   </body>
 </html>
 <!DOCTYPE html>
