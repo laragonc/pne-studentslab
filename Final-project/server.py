@@ -41,30 +41,39 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
         elif path == "/listSpecies":
             SERVER = "rest.ensembl.org"
-
-            limit = int(arguments.get("limit", [""])[0])
             conn = http.client.HTTPConnection(SERVER)
             try:
                 conn.request("GET", get_path("/info/species"))
-                response = conn.getresponse()
-                data = response.read().decode("utf-8")
-                info = json.loads(data)
-                species = info["species"]
-
-                for i in species:
-
-
             except ConnectionRefusedError:
                 print("ERROR! Cannot conect to the server")
                 exit()
 
-        elif path == "/karyotype":
-            pass
-        elif path == "/chromosomeLength":
-            pass
-        else:
-            contents = Path("./html/error.html").read_text()
-            self.send_response(404)
+            response = conn.getresponse()
+            data = response.read().decode("utf-8")
+            info = json.loads(data)
+            species = info["species"]
+            limit = int(arguments.get("lim", [""])[0])
+            names = []
+            for i, specie in enumerate(species):
+                if i <= limit:
+                    name = specie["display_name"]
+                    names.append(name)
+                else:
+                    pass
+            contents = read_html_file("operation.html").render(context={"length": len(species), "limit": limit, "names": names})
+
+
+
+
+
+
+        #elif path == "/karyotype":
+            #pass
+        #elif path == "/chromosomeLength":
+            #pass
+        #else:
+            #contents = Path("./html/error.html").read_text()
+            #self.send_response(404)
 
 
         # Define the content-type header:
