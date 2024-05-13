@@ -8,28 +8,25 @@
     <h1>Browsing Human and Vertebrates genome</h1>
     <h1>BASIC Level Services</h1>
     <p>1)List of species in the genome database</p>
-    Limit:
-      <input type="text" name="lim">
+    <form action="listSpecies" method="get">
+      Limit: <input type="text" name="lim">
     <br>
-  <form action="lim" method="get">
     <input type="submit" value="Send">
   </form>
     <p>2)Information about the karyotype: </p>
-    Select the species:
-      <input type="text" name="spc">
+  <form action="/karyotype" method="get">
+    Select the species: <input type="text" name="spc">
     <br>
-  <form action="spc" method="get">
     <input type="submit" value="Send">
   </form>
     <p>3)Chromosome Length </p>
-    Select the species:
-      <input type="text" name="spc">
-    <br>
-    Select a chromosome:
-      <input type="text" name="chr">
-    <br>
-  <form action="len" method="get">
-    <input type="submit" value="Send">
+    <form action=/chromosomeLength" method="get">
+      Select the species: <input type="text" name="spc">
+      <br>
+      Select a chromosome:
+        <input type="text" name="chr">
+      <br>
+      <input type="submit" value="Send">
   </form>
   </body>
 </html>

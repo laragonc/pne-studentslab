@@ -54,26 +54,37 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             species = info["species"]
             limit = int(arguments.get("lim", [""])[0])
             names = []
-            for i, specie in enumerate(species):
-                if i <= limit:
-                    name = specie["display_name"]
-                    names.append(name)
-                else:
-                    pass
-            contents = read_html_file("operation.html").render(context={"length": len(species), "limit": limit, "names": names})
+            for specie in species:
+                name = specie["display_name"]
+                names.append(name)
+            contents = read_html_file("species.html").render(context={"length": len(species), "limit": limit, "names": names})
+            self.send_response(200)
+        elif path == "/karyotype":
+            SERVER = "rest.ensembl.org"
+            conn = http.client.HTTPConnection(SERVER)
+            try:
+                conn.request("GET", get_path("/info/species"))
+            except ConnectionRefusedError:
+                print("ERROR! Cannot conect to the server")
+                exit()
 
-
-
-
-
-
-        #elif path == "/karyotype":
+            response = conn.getresponse()
+            data = response.read().decode("utf-8")
+            info = json.loads(data)
+            species = info["species"]
+            limit = int(arguments.get("lim", [""])[0])
+            names = []
+            for specie in species:
+                name = specie["display_name"]
+                names.append(name)
+            contents = read_html_file("species.html").render(
+                context={"length": len(species), "limit": limit, "names": names})
+            self.send_response(200)
+        elif path == "/chromosomeLength":
             #pass
-        #elif path == "/chromosomeLength":
-            #pass
-        #else:
-            #contents = Path("./html/error.html").read_text()
-            #self.send_response(404)
+        else:
+            contents = Path("./html/error.html").read_text()
+            self.send_response(404)
 
 
         # Define the content-type header:
