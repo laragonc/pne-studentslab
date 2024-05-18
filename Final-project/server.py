@@ -87,11 +87,18 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             response = conn.getresponse()
             data = response.read().decode("utf-8")
             info = json.loads(data)
-            chromosome_list = info["karyotype"]
-            if chromosome_name in chromosome_list:
-                length =
+            #chromosome_list = info["karyotype"]
+
+
+            data_list = info["top_level_region"]
+            length = "No exist"
+            for dic in data_list:
+                if dic["name"] == chromosome_name:
+                    length = dic["length"]
+                    break
             contents = read_html_file("chromosome.html").render(context={"length": length})
             self.send_response(200)
+
         else:
             contents = Path("./html/error.html").read_text()
             self.send_response(404)
