@@ -43,7 +43,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             SERVER = "rest.ensembl.org"
             conn = http.client.HTTPConnection(SERVER)
             try:
-                conn.request("GET", get_path("/info/species"))
+                conn.request("GET", "/info/species?content-type=application/json")
             except ConnectionRefusedError:
                 print("ERROR! Cannot conect to the server")
                 exit()
@@ -60,28 +60,38 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             contents = read_html_file("species.html").render(context={"length": len(species), "limit": limit, "names": names})
             self.send_response(200)
         elif path == "/karyotype":
+            specie = arguments.get("species", [""])[0]
             SERVER = "rest.ensembl.org"
             conn = http.client.HTTPConnection(SERVER)
             try:
-                conn.request("GET", get_path("/info/species"))
+                conn.request("GET", "/info/assembly/" + specie + "?content-type=application/json")
             except ConnectionRefusedError:
                 print("ERROR! Cannot conect to the server")
                 exit()
-
             response = conn.getresponse()
             data = response.read().decode("utf-8")
             info = json.loads(data)
-            species = info["species"]
-            limit = int(arguments.get("lim", [""])[0])
-            names = []
-            for specie in species:
-                name = specie["display_name"]
-                names.append(name)
-            contents = read_html_file("species.html").render(
-                context={"length": len(species), "limit": limit, "names": names})
+            chromosome_list = info["karyotype"]
+            contents = read_html_file("karyotype.html").render(context={"chromosome_list": chromosome_list})
             self.send_response(200)
         elif path == "/chromosomeLength":
-            #pass
+            specie = arguments.get("species", [""])[0]
+            chromosome_name = arguments.get("chr", [""])[0]
+            SERVER = "rest.ensembl.org"
+            conn = http.client.HTTPConnection(SERVER)
+            try:
+                conn.request("GET", "/info/assembly/" + specie + "?content-type=application/json")
+            except ConnectionRefusedError:
+                print("ERROR! Cannot conect to the server")
+                exit()
+            response = conn.getresponse()
+            data = response.read().decode("utf-8")
+            info = json.loads(data)
+            chromosome_list = info["karyotype"]
+            if chromosome_name in chromosome_list:
+                length =
+            contents = read_html_file("chromosome.html").render(context={"length": length})
+            self.send_response(200)
         else:
             contents = Path("./html/error.html").read_text()
             self.send_response(404)
